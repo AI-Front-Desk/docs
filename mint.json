@@ -48,6 +48,35 @@
       "url": "https://www.myaifrontdesk.com/blog-home"
     }
   ],
+  "navigation": [
+    {
+      "group": "Get Started",
+      "pages": ["introduction"]
+    },
+    {
+      "group": "API Documentation",
+      "pages": ["api-reference/introduction"]
+    },
+    {
+      "group": "Plants",
+      "pages": [
+        "api-reference/endpoint/create",
+        "api-reference/endpoint/get",
+        "api-reference/endpoint/delete"
+      ]
+    },
+    {
+      "group": "Receptionsts",
+      "pages": [
+        "api-reference/users/create",
+        "api-reference/users/get",
+        "api-reference/users/edit",
+        "api-reference/users/calls",
+        "api-reference/users/texts",
+        "api-reference/users/voicemails"
+      ]
+    }
+  ],
   "footerSocials": {
     "x": "https://x.com/myaifrontdesk",
     "linkedin": "https://www.linkedin.com/company/aifrontdesk/"
