@@ -5,12 +5,12 @@ description: 'This section contains common information about using the APIs'
 
 ## Authentication
 
-All API endpoints (except [create receptionist](/api-reference/users/create)) are authenticated using Bearer tokens and picked up from the specification file.
+All API endpoints (except [create receptionist](/api-reference/users/create)) are authenticated using Basic tokens.
 
 ```json
 "security": [
   {
-    "bearerAuth": []
+    "basicAuth": []
   }
 ]
 ```
