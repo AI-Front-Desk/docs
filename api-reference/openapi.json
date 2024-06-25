@@ -232,7 +232,7 @@
             }
           }
         ]
-      },
+      }
     },
     "securitySchemes": {
       "bearerAuth": {
