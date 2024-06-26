@@ -361,14 +361,6 @@ components:
     updateReceptionistRequest:
       type: object
       properties:
-        username:
-          type: string
-          example: johndoe
-          description: Username of the receptionist
-        password:
-          type: string
-          example: T(l3.sdf
-          description: Password of your receptionist
         greetingPhrase:
           type: string
           example: Hi, welcome to My AI Frondesk. We're currently doing a 10% off summer sale. I can help you book an appointment or answer any questions you may have. How may I help you?
