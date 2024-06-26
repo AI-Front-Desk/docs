@@ -199,6 +199,8 @@ paths:
     get:
       tags:
         - users
+      security:
+        - basicAuth: []
       description:
         To fetch all the voicemails of a receptionist given its username
       parameters:
@@ -229,6 +231,10 @@ paths:
               schema:
                 $ref: "#/components/schemas/receptionist500Error"
 components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
   schemas:
     createReceptionistRequest:
       type: object
