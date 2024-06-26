@@ -1,0 +1,447 @@
+openapi: 3.0.1
+info:
+  title: My AI Frontdesk APIs
+  description: This API allows operations to the myaifrontdesk app backend.
+  license:
+    name: MIT
+  version: 1.0.0
+  contact:
+    email: contact@myaifrontdesk.com
+    name: myaifrontdesk
+servers:
+- url: https://api.myaifrontdeskdashboard.com
+tags:
+  - name: users
+    description: Everything about your receptionist
+    externalDocs:
+      description: Find out more
+      url: https://www.myaifrontdesk.com/tutorials
+paths:
+  /api/v1/users/{username}:
+    get:
+      tags:
+        - users
+      description: To fetch the receptionist given its username
+      parameters:
+        - name: username
+          in: path
+          description: username of the receptionist
+          required: true
+          schema:
+            type: string
+            example: johndoe
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/getReceptionist200Response"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/receptionist400Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/receptionist401Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/receptionist500Error"
+  /api/v1/users/calls/{username}:
+    get:
+      tags:
+        - users
+      description:
+        To fetch all the call logs of a receptionist given its username
+      parameters:
+        - name: username
+          in: path
+          description: username of the receptionist
+          required: true
+          schema:
+            type: string
+            example: johndoe
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/callLogs200Response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/receptionist401Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/receptionist500Error"
+  /api/v1/users/texts/{username}:
+    get:
+      tags:
+        - users
+      description:
+        To fetch all the text logs of a receptionist given its username
+      parameters:
+        - name: username
+          in: path
+          description: username of the receptionist
+          required: true
+          schema:
+            type: string
+            example: johndoe
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/textLogs200Response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/receptionist401Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/receptionist500Error"
+  /api/v1/users/voicemails/{username}:
+    get:
+      tags:
+        - users
+      description:
+        To fetch all the voicemails of a receptionist given its username
+      parameters:
+        - name: username
+          in: path
+          description: username of the receptionist
+          required: true
+          schema:
+            type: string
+            example: johndoe
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/voicemails200Response"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/receptionist401Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/receptionist500Error"
+components:
+  schemas:
+    getReceptionist200Response:
+      type: object
+      properties:
+        sucess:
+          type: boolean
+          example: true
+        user:
+          type: object
+          properties:
+            buffer:
+              type: string
+              example: na
+            workflow_notif_settings:
+              type: object
+              properties:
+                scenario:
+                  type: string
+                  example: If the caller mentions anything related to billing, refunds, or payments
+                email_recipients:
+                  type: array
+                  items:
+                    type: string
+                    example: a@b.com
+            sample_qa:
+              type: string
+              example: "Q: What services do you offer? A: We offer haircuts, beard trims, hot towel shaves, and neck cleanups. Q: Do you have any availability right now? A: You can check for availability on our website."
+            time_zone:
+              type: string
+              example: na
+            variables:
+              type: object
+            call_notif_settings:
+              type: object
+              properties:
+                email_recipients:
+                  type: array
+                  items:
+                    type: string
+                    example: a@b.com
+                voicemail_enabled:
+                  type: string
+                  example: "false"
+                text_enabled:
+                  type: string
+                  example: "false"
+                call_enabled:
+                  type: string
+                  example: "true"
+            voice_selected:
+              type: object
+              properties:
+                voiceId:
+                  type: string
+                  example: aura-asteria-en
+                provider:
+                  type: string
+                  example: deepgram
+            callWorkflows:
+              type: array
+              items:
+                type: object
+                properties:
+                  description:
+                    type: string
+                    example: Transfer the caller to the billing department. Execute whenever caller asks for a refund or receipt.
+                  voiceResponse:
+                    type: string
+                    example: Sounds good, I am transferring you to the billing department right now. Please hold.
+                  workflowForwardingNumber:
+                    type: string
+                    example: +1xxxxxxxxxxx
+                  country:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: "Vietnam (+84)"
+                      code:
+                        type: string
+                        example: +84
+                  emails_sent:
+                    type: integer
+                    example: 1
+                  demo:
+                    type: boolean
+                    example: true
+                  last_emailed:
+                    type: number
+                    example: 1719315025913
+                  find_out_about_us:
+                    type: string
+                    example: na
+                  selectedLanguages:
+                    type: array
+                    items:
+                      type: string
+                      example: English, Hindi
+                  interruptionWords:
+                    type: integer
+                    example: 15
+                  workflows:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        description:
+                          type: string
+                          example: Send the caller a copy of the menu. Execute whenever caller asks for menu or prices.
+                        voiceResponse:
+                          type: string
+                          example: "Here is our menu: www.restaurant.com/menu"
+                        textMessage:
+                          type: string
+                          example: Great! I’ve just texted you a copy of the menu
+                  voicemailsEnabled:
+                    type: boolean
+                    example: false
+                  business_name:
+                    type: string
+                    example: My AI Frontdesk
+                  days_excluded:
+                    type: string
+                    example: na
+                  language_greetings:
+                    type: object
+                    properties:
+                      Hindi:
+                        type: string
+                        example: नमस्ते, मैं आपकी कैसे मदद कर सकता हूँ?
+                  ai_prompt:
+                    type: string
+                    example: From now on, you are a helpful phone receptionist at My AI Frontdesk that customers can call to ask questions. Be friendly and helpful. Never make up information that you don't know.
+                  timestamp:
+                    type: string
+                    example: 2024-06-25T17:38:19.983Z
+                  created:
+                    type: string
+                    example: 2024-06-25T11:30:22.886Z
+                  referral:
+                    type: string
+                    example: na
+                  languageOptions:
+                    type: string
+                    example: na
+                  business_information:
+                    type: string
+                    example: "Prestige Estates Realty is a dynamic player in the real estate industry, specializing in residential and commercial property transactions. With a commitment to excellence and customer satisfaction, we offer a comprehensive range of services, including property sales, leasing, and property management.\n\nOur team of experienced real estate professionals leverages market insights and cutting-edge technology to provide clients with tailored solutions that meet their unique needs. Whether you're buying, selling, or renting, ABC Realty is dedicated to delivering exceptional results and ensuring a seamless real estate experience.\n\nTo explore our available properties, list your property with us, or discuss your real estate goals, please visit our website or get in touch with our knowledgeable team.\n\nServices offered:\n- Property sales\n- Leasing\n- Property management\n- Market insights\n\nPrices:\n- Property sales: Starting from $200000\n- Leasing: Starting from $1000\n- Property management: Starting from $500\n- Market insights: Starting from $500"
+                  hours_excluded:
+                    type: string
+                    example: na
+                  businessType:
+                    type: string
+                    example: Other
+                  endpointing:
+                    type: integer
+                    example: 300
+                  scheduling_instructions:
+                    type: string
+                    example: na
+                  number:
+                    type: string
+                    example: +1xxxxxxxxxx
+                  texting_platform_notif_settings:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                        example: true
+                      email_recipients:
+                        type: array
+                        items:
+                          type: string
+                          example: a@b.com, b@c.com
+                      text_recipients:
+                        type: array
+                        items:
+                          type: string
+                          example: +1xxxxxxxxxx, +1xxxxxxxxxx
+                  voice:
+                    type: string
+                    example: na
+                  system_calendar:
+                    type: string
+                    example: na
+                  system_phrase:
+                    type: string
+                    example: Hi, welcome to My AI Frondesk. We're currently doing a 10% off summer sale. I can help you book an appointment or answer any questions you may have. How may I help you?
+    receptionist400Error:
+      type: object
+      properties:
+        sucess:
+          type: boolean
+          example: false
+        errors:
+          type: array
+          items:
+            type: string
+            example: "Username must be at-least 4 characters long"
+    receptionist401Error:
+      type: object
+      properties:
+        sucess:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: Invalid credentials
+    receptionist500Error:
+      type: object
+      properties:
+        sucess:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: Something went wrong
+    callLogs200Response:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        callLogs:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                example: "5/7/2024, 12:42:20 AM"
+              forwardedFrom:
+                type: string
+                example: johndoe
+              from:
+                type: string
+                example: +1xxxxxxxxxx
+              to:
+                type: string
+                example: +1xxxxxxxxxx
+              transcript:
+                type: string
+                example: "assistant@ Welcome to Zeus Properties.  My name is Cortana.  How may I help you today?Where are you from?\n"
+    textLogs200Response:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        textLogs:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                example: "5/7/2024, 12:42:20 AM"
+              forwardedFrom:
+                type: string
+                example: johndoe
+              text:
+                type: string
+                example: Great! I’ve just texted you a copy of the menu  \n \n \n (No-Reply) Sent via myaifrontdesk.com
+              to:
+                type: string
+                example: +1xxxxxxxxxx
+    voicemails200Response:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        voicemails:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                example: "5/7/2024, 12:42:20 AM"
+              forwardedFrom:
+                type: string
+                example: johndoe
+              from:
+                type: string
+                example: +1xxxxxxxxxx
+              voicemail_transcript:
+                type: string
+                example: "Hey, Sally. It's Rich here. I just wanted to give you my phone number. It's, four zero eight"
+                
