@@ -74,7 +74,7 @@
         },
         "responses": {
           "200": {
-            "description": "plant response",
+            "description": "Plant response",
             "content": {
               "application/json": {
                 "schema": {
@@ -84,7 +84,7 @@
             }
           },
           "400": {
-            "description": "unexpected error",
+            "description": "Unexpected error",
             "content": {
               "application/json": {
                 "schema": {
@@ -117,7 +117,7 @@
             "content": {}
           },
           "400": {
-            "description": "unexpected error",
+            "description": "Unexpected error",
             "content": {
               "application/json": {
                 "schema": {
@@ -145,17 +145,17 @@
         },
         "responses": {
           "200": {
-            "description": "plant response",
+            "description": "Receptionist response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
+                  "$ref": "#/components/schemas/Receptionist"
                 }
               }
             }
           },
           "400": {
-            "description": "unexpected error",
+            "description": "Unexpected error",
             "content": {
               "application/json": {
                 "schema": {
@@ -202,6 +202,176 @@
           }
         ]
       },
+      "Receptionist": {
+        "required": [
+          "number",
+          "username",
+          "system_phrase",
+          "business_information",
+          "email_address",
+          "business_name",
+          "password",
+          "sample_qa",
+          "selected_languages",
+          "language_greetings",
+          "workflows",
+          "callWorkflows",
+          "chattiness",
+          "ai_prompt",
+          "voice_selected"
+        ],
+        "type": "object",
+        "properties": {
+          "number": {
+            "description": "Username",
+            "type": "string"
+          },
+          "username": {
+            "description": "Username",
+            "type": "string"
+          },
+          "system_phrase": {
+            "description": "System phrase (newlines, carriage returns, and tabs removed)",
+            "type": "string"
+          },
+          "business_information": {
+            "description": "Company information",
+            "type": "string"
+          },
+          "email_address": {
+            "description": "Email address",
+            "type": "string"
+          },
+          "business_name": {
+            "description": "Business name (newlines, carriage returns, and tabs removed)",
+            "type": "string"
+          },
+          "password": {
+            "description": "Password",
+            "type": "string"
+          },
+          "sample_qa": {
+            "description": "Sample Q&A",
+            "type": "string"
+          },
+          "selected_languages": {
+            "description": "Selected languages",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "English",
+                "Spanish",
+                "French",
+                "German",
+                "Mandarin",
+                "Portuguese",
+                "Japanese",
+                "Arabic",
+                "Russian",
+                "Hindi",
+                "Dutch"
+              ]
+            }
+          },
+          "language_greetings": {
+            "description": "Mapping of Language to greeting string",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "workflows": {
+            "description": "Workflow objects",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Workflow"
+            }
+          },
+          "callWorkflows": {
+            "description": "Call workflow objects",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CallWorkflow"
+            }
+          },
+          "chattiness": {
+            "description": "Chattiness level (integer)",
+            "type": "string"
+          },
+          "ai_prompt": {
+            "description": "AI prompt",
+            "type": "string"
+          },
+          "voice_selected": {
+            "description": "Voice selection object",
+            "type": "string",
+            "enum": [
+              "aura-asteria-en",
+              "aura-luna-en",
+              "aura-stella-en",
+              "aura-athena-en",
+              "aura-orion-en",
+              "aura-arcas-en",
+              "aura-perseus-en",
+              "aura-angus-en",
+              "aura-helios-en"
+            ]
+          }
+        }
+      },
+      "Workflow": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "voiceResponse": {
+            "type": "string"
+          },
+          "textMessage": {
+            "type": "string"
+          }
+        }
+      },
+      "CallWorkflow": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "voiceResponse": {
+            "type": "string"
+          },
+          "workflowForwardingNumber": {
+            "type": "string"
+          },
+          "country": {
+            "$ref": "#/components/schemas/Country"
+          }
+        }
+      },
+      "Country": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": [
+              "United States (+1)",
+              "United Kingdom (+44)",
+              "Andorra (+376)",
+              "Argentina (+54)",
+              "Australia (+61)",
+              "Vietnam (+84)",
+              "n/a"
+            ]
+          },
+          "code": {
+            "type": "string",
+            "enum": ["+1", "+44", "+376", "+54", "+61", "+84", ""]
+          }
+        }
+      },
       "Error": {
         "required": ["error", "message"],
         "type": "object",
@@ -218,14 +388,14 @@
       "NewReceptionist": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/Plant"
+            "$ref": "#/components/schemas/Receptionist"
           },
           {
             "required": ["id"],
             "type": "object",
             "properties": {
               "id": {
-                "description": "Identification number of the plant",
+                "description": "Identification number of the receptionist",
                 "type": "integer",
                 "format": "int64"
               }
