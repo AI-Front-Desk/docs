@@ -17,7 +17,81 @@ tags:
       description: Find out more
       url: https://www.myaifrontdesk.com/tutorials
 paths:
+  /api/v1/users:
+    post:
+      tags:
+        - users
+      description: To create/register a new receptionist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createReceptionistRequest"
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/createReceptionist200Response"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/receptionist400Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/receptionist401Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/receptionist500Error"
+    
   /api/v1/users/{username}:
+    put:
+      tags:
+        - users
+      description: To edit a receptionist given its username
+      parameters:
+        - name: username
+          in: path
+          description: username of the receptionist
+          required: true
+          schema:
+            type: string
+            example: johndoe
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/updateReceptionist200Response"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/receptionist400Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/receptionist401Error"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/receptionist500Error"
     get:
       tags:
         - users
@@ -37,12 +111,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/getReceptionist200Response"
-        "400":
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/receptionist400Error"
         "401":
           description: Unauthorized
           content:
@@ -156,6 +224,207 @@ paths:
                 $ref: "#/components/schemas/receptionist500Error"
 components:
   schemas:
+    createReceptionistRequest:
+      type: object
+      required:
+        - username
+        - password
+        - greetingPhrase
+        - emailAddress
+        - businessName
+        - businessType
+      properties:
+        username:
+          type: string
+          example: johndoe
+          description: Username of the receptionist
+        password:
+          type: string
+          example: T(l3.sdf
+          description: Password of your receptionist
+        greetingPhrase:
+          type: string
+          example: Hi, welcome to My AI Frondesk. We're currently doing a 10% off summer sale. I can help you book an appointment or answer any questions you may have. How may I help you?
+          description: Greeting phrase for the receptionist. It will say this phrase as it picks up the call
+        businessInformation:
+          type: string
+          example: "Prestige Estates Realty is a dynamic player in the real estate industry, specializing in residential and commercial property transactions. With a commitment to excellence and customer satisfaction, we offer a comprehensive range of services, including property sales, leasing, and property management.\n\nOur team of experienced real estate professionals leverages market insights and cutting-edge technology to provide clients with tailored solutions that meet their unique needs. Whether you're buying, selling, or renting, ABC Realty is dedicated to delivering exceptional results and ensuring a seamless real estate experience.\n\nTo explore our available properties, list your property with us, or discuss your real estate goals, please visit our website or get in touch with our knowledgeable team.\n\nServices offered:\n- Property sales\n- Leasing\n- Property management\n- Market insights\n\nPrices:\n- Property sales: Starting from $200000\n- Leasing: Starting from $1000\n- Property management: Starting from $500\n- Market insights: Starting from $500"
+          description: Information about your business. This will be the knowledge base of the receptionist
+        emailAddress:
+          type: string
+          example: a@bgmail.com
+          format: email
+          description: Email address of the receptionist
+        businessName:
+          type: string
+          example: My AI Frontdesk
+          description: Name of the business
+        sampleQA:
+          type: string
+          example: "Q: What services do you offer? A: We offer haircuts, beard trims, hot towel shaves, and neck cleanups. Q: Do you have any availability right now? A: You can check for availability on our website."
+          description: Sample QA for your receptionist to train it according to real questions asked by the users and how to respond to them
+        selectedLanguages:
+          type: array
+          items:
+            type: string
+            example: English, Hindi
+          description: Languages your receptionist will support (at-least English is mandatory/default)
+        languageGreetings:
+          type: object
+          additionalProperties:
+            type: string
+          description: Greetings for all the languages provided in selectedLanguages (except for English, which uses greetingPhrase instead)
+        workflows:
+          type: array
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+                example: Send the caller a copy of the menu. Execute whenever caller asks for menu or prices.
+              voiceResponse:
+                type: string
+                example: "Here is our menu: www.restaurant.com/menu"
+              textMessage:
+                type: string
+                example: Great! I’ve just texted you a copy of the menu
+        callWorkflows:
+          type: array
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+                example: Transfer the caller to the billing department. Execute whenever caller asks for a refund or receipt.
+              voiceResponse:
+                type: string
+                example: Sounds good, I am transferring you to the billing department right now. Please hold."
+              workflowForwardingNumber:
+                type: string
+                example: +1xxxxxxxxxxx
+              country:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Vietnam (+84)
+                  code:
+                    type: string
+                    example: "+84"
+        voiceSelected:
+          type: object
+          properties:
+            voiceId:
+              type: string
+              example: aura-asteria-en
+            provider:
+              type: string
+              example: deepgram
+        chattiness:
+          type: integer
+          minimum: 0
+          maximum: 100
+          default: 35
+        aiPrompt:
+          type: string
+          example: From now on, you are a helpful phone receptionist at My AI Frontdesk that customers can call to ask questions. Be friendly and helpful. Never make up information that you don't know.
+        testingNumber:
+          type: string
+          example: "+1xxxxxxxx"
+          default: "+1"
+        businessType:
+          type: string
+          example: "Other"
+        specialCommands:
+          type: string
+          example: Be extra polite
+        endpointing:
+          type: integer
+          minimum: 0
+          maximum: 1000
+          default: 300
+        interruptionWords:
+          type: integer
+          minimum: 0
+          maximum: 15
+          default: 2
+        extenstionDigits:
+          type: object
+          properties:
+            extension:
+              type: integer
+              minimum: 1
+              maximum: 999
+              example: 1
+            phoneNumber:
+              type: string
+              example: "+1xxxxxxxxxx"
+        voicemailsEnabled:
+          type: boolean
+          example: true
+        callNotifSettings:
+          type: object
+          properties:
+            email_recipients:
+              type: array
+              items:
+                type: string
+                example: a@b.com, b@c.com
+              description: List of email recipients for receiving call notifications
+            voicemail_enabled:
+              type: boolean
+              example: true
+            text_enabled:
+              type: boolean
+              example: true
+            call_enabled:
+              type: boolean
+              example: false
+        workflowNotifSettings:
+          type: object
+          properties:
+            scenario:
+              type: string
+              example: If the caller mentions anything related to billing, refunds, or payments
+            email_recipients:
+              type: array
+              items:
+                type: string
+                example: a@b.com
+        textingPlatformNotifSettings:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+              example: true
+            email_recipients:
+              type: array
+              items:
+                type: string
+                example: a@b.com, b@c.com
+            text_recipients:
+              type: array
+              items:
+                type: string
+                example: +1xxxxxxxxxx, +1xxxxxxxxxx
+    createReceptionist200Response:
+      type: object
+      properties:
+        sucess:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Receptionist created successfully
+    updateReceptionist200Response:
+      type: object
+      properties:
+        sucess:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Receptionist updated successfully
     getReceptionist200Response:
       type: object
       properties:
@@ -444,4 +713,3 @@ components:
               voicemail_transcript:
                 type: string
                 example: "Hey, Sally. It's Rich here. I just wanted to give you my phone number. It's, four zero eight"
-                
