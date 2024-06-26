@@ -58,6 +58,8 @@ paths:
     put:
       tags:
         - users
+      security:
+        - basicAuth: []
       description: To edit a receptionist given its username
       requestBody:
         required: true
@@ -101,6 +103,8 @@ paths:
     get:
       tags:
         - users
+      security:
+        - basicAuth: []
       description: To fetch the receptionist given its username
       parameters:
         - name: username
@@ -133,6 +137,8 @@ paths:
     get:
       tags:
         - users
+      security:
+        - basicAuth: []
       description:
         To fetch all the call logs of a receptionist given its username
       parameters:
@@ -166,6 +172,8 @@ paths:
     get:
       tags:
         - users
+      security:
+        - basicAuth: []
       description:
         To fetch all the text logs of a receptionist given its username
       parameters:
