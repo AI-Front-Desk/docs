@@ -9,7 +9,7 @@ info:
     email: contact@myaifrontdesk.com
     name: myaifrontdesk
 servers:
-- url: https://api.myaifrontdeskdashboard.com
+  - url: https://api.myaifrontdeskdashboard.com
 tags:
   - name: users
     description: Everything about your receptionist
