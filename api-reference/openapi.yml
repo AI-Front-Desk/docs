@@ -276,6 +276,10 @@ components:
           description: Greetings for all the languages provided in selectedLanguages (except for English, which uses greetingPhrase instead)
         workflows:
           type: array
+          required:
+           - description
+           - voiceResponse
+           - textMessage
           items:
             type: object
             properties:
@@ -713,3 +717,4 @@ components:
               voicemail_transcript:
                 type: string
                 example: "Hey, Sally. It's Rich here. I just wanted to give you my phone number. It's, four zero eight"
+             
