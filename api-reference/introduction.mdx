@@ -3,14 +3,45 @@ title: 'Introduction'
 description: 'This section contains common information about using the APIs'
 ---
 
+## Server URL
+
+All the API endpoints are exposed under `https://api.myaifrontdeskdashboard.com/api/v1/`
+
 ## Authentication
 
-All API endpoints (except [create receptionist](/api-reference/users/create)) are authenticated using Basic tokens.
+All the protected API endpoints use `Basic` authentication.
+Here's how you generate an authentication token:
 
-```json
-"security": [
-  {
-    "basicAuth": []
-  }
-]
+#### For JavaScript:
+
+```javascript
+btoa(`${username}:${password}`)
+```
+
+#### For Node.js:
+
+```javascript
+Buffer.from(`${username}:${password}`).toString('base64')
+```
+
+#### Here's how you pass them in javascript:
+```javascript
+await axios.post(
+      `/your/protected/api/route`,
+      {
+        ...body
+      },
+      {
+        headers: {
+          Authorization: btoa(`${username}:${password}`),
+        },
+      }
+    );
+```
+
+
+#### Authentication reference for API docs:
+```yml
+security:
+  - basicAuth: []
 ```
