@@ -373,6 +373,7 @@ components:
         reservedNum:
           type: string
           example: +13456788989
+          description: Your twilio phone number which would receive calls
         businessInformation:
           type: string
           example: "Prestige Estates Realty is a dynamic player in the real estate industry, specializing in residential and commercial property transactions. With a commitment to excellence and customer satisfaction, we offer a comprehensive range of services, including property sales, leasing, and property management.\n\nOur team of experienced real estate professionals leverages market insights and cutting-edge technology to provide clients with tailored solutions that meet their unique needs. Whether you're buying, selling, or renting, ABC Realty is dedicated to delivering exceptional results and ensuring a seamless real estate experience.\n\nTo explore our available properties, list your property with us, or discuss your real estate goals, please visit our website or get in touch with our knowledgeable team.\n\nServices offered:\n- Property sales\n- Leasing\n- Property management\n- Market insights\n\nPrices:\n- Property sales: Starting from $200000\n- Leasing: Starting from $1000\n- Property management: Starting from $500\n- Market insights: Starting from $500"
