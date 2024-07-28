@@ -363,6 +363,37 @@ components:
         businessType:
           type: string
           example: "Other"
+        formBuilders:
+          type: array
+          description: The AI wil ask questions defined in the `questions` array in the beginning of the call (if `scenario` field is set to `beginning`) or if defined scenario occurs during the call (if `scenario` field is set to `custom-scenario`). Remember while using `custom-scenario`, the `customScenario` field is necessary.
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+                example: custom-scenario
+                enum: [beginning, custom-scenario]
+              customScenario:
+                type: string
+                example: Anytime the user says I want to introduce my pet
+              questions:
+                type: array
+                items:
+                  type: string
+                  example: What is your pet's name?
+              final_collection_phrase: 
+                type: string
+                example: Thanks, I have collected your information. Is there anything else I can help you with?
+        hangupWebhook:
+          type: object
+          properties:
+            method:
+              type: string
+              example: POST
+              enum: [PUT, PATCH, POST]
+            endpoint:
+              type: string
+              example: https://www.example.com/
     updateReceptionistRequest:
       type: object
       properties:
@@ -539,15 +570,37 @@ components:
               items:
                 type: string
                 example: +1xxxxxxxxxx, +1xxxxxxxxxx
-    createReceptionist200Response:
-      type: object
-      properties:
-        sucess:
-          type: boolean
-          example: true
-        message:
-          type: string
-          example: Receptionist created successfully
+        formBuilders:
+          type: array
+          description: The AI wil ask questions defined in the `questions` array in the beginning of the call (if `scenario` field is set to `beginning`) or if defined scenario occurs during the call (if `scenario` field is set to `custom-scenario`). Remember while using `custom-scenario`, the `customScenario` field is necessary.
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+                example: custom-scenario
+                enum: [beginning, custom-scenario]
+              customScenario:
+                type: string
+                example: Anytime the user says I want to introduce my pet
+              questions:
+                type: array
+                items:
+                  type: string
+                  example: What is your pet's name?
+              final_collection_phrase: 
+                type: string
+                example: Thanks, I have collected your information. Is there anything else I can help you with?
+        hangupWebhook:
+          type: object
+          properties:
+            method:
+              type: string
+              example: POST
+              enum: [PUT, PATCH, POST]
+            endpoint:
+              type: string
+              example: https://www.example.com/
     updateReceptionist200Response:
       type: object
       properties:
@@ -569,17 +622,17 @@ components:
             buffer:
               type: string
               example: na
-            # workflow_notif_settings:
-            #   type: object
-            #   properties:
-            #     scenario:
-            #       type: string
-            #       example: If the caller mentions anything related to billing, refunds, or payments
-            #     email_recipients:
-            #       type: array
-            #       items:
-            #         type: string
-            #         example: a@b.com
+            workflow_notif_settings:
+              type: object
+              properties:
+                scenario:
+                  type: string
+                  example: If the caller mentions anything related to billing, refunds, or payments
+                email_recipients:
+                  type: array
+                  items:
+                    type: string
+                    example: a@b.com
             sampleQA:
               type: string
               example: "Q: What services do you offer? A: We offer haircuts, beard trims, hot towel shaves, and neck cleanups. Q: Do you have any availability right now? A: You can check for availability on our website."
@@ -588,23 +641,23 @@ components:
             #   example: na
             # variables:
             #   type: object
-            # call_notif_settings:
-            #   type: object
-            #   properties:
-            #     email_recipients:
-            #       type: array
-            #       items:
-            #         type: string
-            #         example: a@b.com
-            #     voicemail_enabled:
-            #       type: string
-            #       example: "false"
-            #     text_enabled:
-            #       type: string
-            #       example: "false"
-            #     call_enabled:
-            #       type: string
-            #       example: "true"
+            call_notif_settings:
+              type: object
+              properties:
+                email_recipients:
+                  type: array
+                  items:
+                    type: string
+                    example: a@b.com
+                voicemail_enabled:
+                  type: string
+                  example: "false"
+                text_enabled:
+                  type: string
+                  example: "false"
+                call_enabled:
+                  type: string
+                  example: "true"
             voiceSelected:
               type: object
               properties:
@@ -654,9 +707,9 @@ components:
               items:
                 type: string
                 example: English, Hindi
-            # interruptionWords:
-            #   type: integer
-            #   example: 15
+            interruptionWords:
+              type: integer
+              example: 15
             workflows:
               type: array
               items:
@@ -671,9 +724,9 @@ components:
                   textMessage:
                     type: string
                     example: Great! I’ve just texted you a copy of the menu
-            # voicemailsEnabled:
-            #   type: boolean
-            #   example: false
+            voicemailsEnabled:
+              type: boolean
+              example: false
             businessName:
               type: string
               example: My AI Frontdesk
@@ -710,31 +763,31 @@ components:
             businessType:
               type: string
               example: Other
-            # endpointing:
-            #   type: integer
-            #   example: 300
+            endpointing:
+              type: integer
+              example: 300
             # scheduling_instructions:
             #   type: string
             #   example: na
             username:
               type: string
               example: +1xxxxxxxxxx
-            # texting_platform_notif_settings:
-            #   type: object
-            #   properties:
-            #     enabled:
-            #       type: boolean
-            #       example: true
-            #     email_recipients:
-            #       type: array
-            #       items:
-            #         type: string
-            #         example: a@b.com, b@c.com
-            #     text_recipients:
-            #       type: array
-            #       items:
-            #         type: string
-            #         example: +1xxxxxxxxxx, +1xxxxxxxxxx
+            texting_platform_notif_settings:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                  example: true
+                email_recipients:
+                  type: array
+                  items:
+                    type: string
+                    example: a@b.com, b@c.com
+                text_recipients:
+                  type: array
+                  items:
+                    type: string
+                    example: +1xxxxxxxxxx, +1xxxxxxxxxx
             # voice:
             #   type: string
             #   example: na
@@ -744,6 +797,34 @@ components:
             greetingPhrase:
               type: string
               example: Hi, welcome to My AI Frondesk. We're currently doing a 10% off summer sale. I can help you book an appointment or answer any questions you may have. How may I help you?
+        formBuilders:
+          type: array
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+                example: custom-scenario
+              customScenario:
+                type: string
+                example: Anytime the user says I want to introduce my pet
+              questions:
+                type: array
+                items:
+                  type: string
+                  example: What is your pet's name?
+              final_collection_phrase: 
+                type: string
+                example: Thanks, I have collected your information. Is there anything else I can help you with?
+        hangupWebhook:
+          type: object
+          properties:
+            method:
+              type: string
+              example: POST
+            endpoint:
+              type: string
+              example: https://www.example.com/
     receptionist400Error:
       type: object
       properties:
