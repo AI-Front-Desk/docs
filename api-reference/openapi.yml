@@ -138,8 +138,7 @@ paths:
         - users
       security:
         - basicAuth: []
-      description:
-        To fetch all the call logs of a receptionist given its username
+      description: To fetch all the call logs of a receptionist given its username
       parameters:
         - name: username
           in: path
@@ -173,8 +172,7 @@ paths:
         - users
       security:
         - basicAuth: []
-      description:
-        To fetch all the text logs of a receptionist given its username
+      description: To fetch all the text logs of a receptionist given its username
       parameters:
         - name: username
           in: path
@@ -208,8 +206,7 @@ paths:
         - users
       security:
         - basicAuth: []
-      description:
-        To fetch all the voicemails of a receptionist given its username
+      description: To fetch all the voicemails of a receptionist given its username
       parameters:
         - name: username
           in: path
@@ -301,9 +298,9 @@ components:
         workflows:
           type: array
           required:
-           - description
-           - voiceResponse
-           - textMessage
+            - description
+            - voiceResponse
+            - textMessage
           items:
             type: object
             properties:
@@ -381,7 +378,7 @@ components:
                 items:
                   type: string
                   example: What is your pet's name?
-              final_collection_phrase: 
+              final_collection_phrase:
                 type: string
                 example: Thanks, I have collected your information. Is there anything else I can help you with?
         hangupWebhook:
@@ -394,6 +391,15 @@ components:
             endpoint:
               type: string
               example: https://www.example.com/
+    createReceptionist200Response:
+      type: object
+      properties:
+        sucess:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Receptionist created successfully
     updateReceptionistRequest:
       type: object
       properties:
@@ -436,9 +442,9 @@ components:
         workflows:
           type: array
           required:
-           - description
-           - voiceResponse
-           - textMessage
+            - description
+            - voiceResponse
+            - textMessage
           items:
             type: object
             properties:
@@ -588,7 +594,7 @@ components:
                 items:
                   type: string
                   example: What is your pet's name?
-              final_collection_phrase: 
+              final_collection_phrase:
                 type: string
                 example: Thanks, I have collected your information. Is there anything else I can help you with?
         hangupWebhook:
@@ -622,7 +628,7 @@ components:
             buffer:
               type: string
               example: na
-            workflow_notif_settings:
+            workflowNotifSettings:
               type: object
               properties:
                 scenario:
@@ -641,7 +647,7 @@ components:
             #   example: na
             # variables:
             #   type: object
-            call_notif_settings:
+            callNotifSettings:
               type: object
               properties:
                 email_recipients:
@@ -772,7 +778,7 @@ components:
             username:
               type: string
               example: +1xxxxxxxxxx
-            texting_platform_notif_settings:
+            textingPlatformNotifSettings:
               type: object
               properties:
                 enabled:
@@ -813,7 +819,7 @@ components:
                 items:
                   type: string
                   example: What is your pet's name?
-              final_collection_phrase: 
+              final_collection_phrase:
                 type: string
                 example: Thanks, I have collected your information. Is there anything else I can help you with?
         hangupWebhook:
@@ -926,4 +932,3 @@ components:
               voicemail_transcript:
                 type: string
                 example: "Hey, Sally. It's Rich here. I just wanted to give you my phone number. It's, four zero eight"
-              
