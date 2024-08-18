@@ -381,7 +381,7 @@ components:
               final_collection_phrase:
                 type: string
                 example: Thanks, I have collected your information. Is there anything else I can help you with?
-        hangupWebhook:
+        postCallWebhook:
           type: object
           properties:
             method:
@@ -597,7 +597,7 @@ components:
               final_collection_phrase:
                 type: string
                 example: Thanks, I have collected your information. Is there anything else I can help you with?
-        hangupWebhook:
+        postCallWebhook:
           type: object
           properties:
             method:
@@ -822,7 +822,7 @@ components:
               final_collection_phrase:
                 type: string
                 example: Thanks, I have collected your information. Is there anything else I can help you with?
-        hangupWebhook:
+        postCallWebhook:
           type: object
           properties:
             method:
