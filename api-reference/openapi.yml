@@ -388,7 +388,7 @@ components:
           example: "Other"
         formBuilders:
           type: array
-          description: The AI wil ask questions defined in the `questions` array in the beginning of the call (if `scenario` field is set to `beginning`) or if defined scenario occurs during the call (if `scenario` field is set to `custom-scenario`). Remember while using `custom-scenario`, the `customScenario` field is necessary.
+          description: The AI will ask questions defined in the `questions` array in the beginning of the call (if `scenario` field is set to `beginning`) or if defined scenario occurs during the call (if `scenario` field is set to `custom-scenario`). Remember while using `custom-scenario`, the `customScenario` field is necessary.
           items:
             type: object
             properties:
@@ -698,7 +698,7 @@ components:
                 example: +1xxxxxxxxxx, +1xxxxxxxxxx
         formBuilders:
           type: array
-          description: The AI wil ask questions defined in the `questions` array in the beginning of the call (if `scenario` field is set to `beginning`) or if defined scenario occurs during the call (if `scenario` field is set to `custom-scenario`). Remember while using `custom-scenario`, the `customScenario` field is necessary.
+          description: The AI will ask questions defined in the `questions` array in the beginning of the call (if `scenario` field is set to `beginning`) or if defined scenario occurs during the call (if `scenario` field is set to `custom-scenario`). Remember while using `custom-scenario`, the `customScenario` field is necessary.
           items:
             type: object
             properties:
