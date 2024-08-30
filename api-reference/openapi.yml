@@ -1017,132 +1017,132 @@ components:
             greetingPhrase:
               type: string
               example: Hi, welcome to My AI Frondesk. We're currently doing a 10% off summer sale. I can help you book an appointment or answer any questions you may have. How may I help you?
-          formBuilders:
-            type: array
-            items:
-              type: object
-              properties:
-                description:
-                  type: string
-                  example: custom-scenario
-                customScenario:
-                  type: string
-                  example: Anytime the user says I want to introduce my pet
-                questions:
-                  type: array
-                  items:
+            formBuilders:
+              type: array
+              items:
+                type: object
+                properties:
+                  description:
                     type: string
-                    example: What is your pet's name?
-                final_collection_phrase:
-                  type: string
-                  example: Thanks, I have collected your information. Is there anything else I can help you with?
-          postCallWebhook:
-            type: object
-            properties:
-              method:
-                type: string
-                example: POST
-                enum: [POST, PUT]
-              endpoint:
-                type: string
-                example: https://www.example.com/
-          callWebhookWorkflows:
-            type: array
-            items:
+                    example: custom-scenario
+                  customScenario:
+                    type: string
+                    example: Anytime the user says I want to introduce my pet
+                  questions:
+                    type: array
+                    items:
+                      type: string
+                      example: What is your pet's name?
+                  final_collection_phrase:
+                    type: string
+                    example: Thanks, I have collected your information. Is there anything else I can help you with?
+            postCallWebhook:
               type: object
-              required:
-                - name
-                - scenario
-                - isRepetable
-                - speechToEmit
-                - timeoutSeconds
-                - webhookInformation
               properties:
-                id:
+                method:
                   type: string
-                  example: 1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed
-                name:
+                  example: POST
+                  enum: [POST, PUT]
+                endpoint:
                   type: string
-                  example: Retieval worfflow
-                scenario:
-                  type: string
-                  example: Trigger this webhook when the caller says book an appointment for me.
-                isRepetable:
-                  type: boolean
-                  example: false
-                speechToEmit:
-                  type: string
-                  example: Great! Lets get your appointment booked.
-                timeoutSeconds:
-                  type: number
-                  example: 5
-                webhookInformation:
-                  type: object
-                  required:
-                    - url
-                    - method
-                  properties:
-                    url:
-                      type: string
-                      example: https://www.example.com
-                    method:
-                      type: string
-                      example: POST
-                      enum: [GET, POST, PUT]
-                    headers:
-                      type: object
-                      description: optional headers for the webhook
-                      properties:
-                        headerName:
-                          type: string
-                          description: Header name-value pair
-                    body:
-                      type: object
-                      description: DONOT pass in case of "GET" method
-                      properties:
-                        key:
-                          type: string
-                          description: Wrap inside {{}} if dynamic, use normal string otherwise (for hard-coded values). Dynamic values can be extracted during the call using extractedCallInfo object
-                    responseData:
-                      type: array
-                      items:
-                        type: object
-                        required:
-                          - jsonPath
-                          - variableName
-                          - prompt
-                        description: '`data` here is the response data which can be accessed and described within jsonPath'
-                        properties:
-                          jsonPath:
-                            type: string
-                            description: Path of variable in the data object
-                            example: data.date
-                          variableName:
-                            type: string
-                            description: Name of the variable
-                            example: date
-                          prompt:
-                            type: string
-                            example: For which date should we book an appointment with you
-                extractedCallInfo:
-                  type: array
-                  items:
+                  example: https://www.example.com/
+            callWebhookWorkflows:
+              type: array
+              items:
+                type: object
+                required:
+                  - name
+                  - scenario
+                  - isRepetable
+                  - speechToEmit
+                  - timeoutSeconds
+                  - webhookInformation
+                properties:
+                  id:
+                    type: string
+                    example: 1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed
+                  name:
+                    type: string
+                    example: Retieval worfflow
+                  scenario:
+                    type: string
+                    example: Trigger this webhook when the caller says book an appointment for me.
+                  isRepetable:
+                    type: boolean
+                    example: false
+                  speechToEmit:
+                    type: string
+                    example: Great! Lets get your appointment booked.
+                  timeoutSeconds:
+                    type: number
+                    example: 5
+                  webhookInformation:
                     type: object
                     required:
-                      - name
-                      - type
-                      - description
+                      - url
+                      - method
                     properties:
-                      name:
+                      url:
                         type: string
-                        example: date
-                      type:
-                      type: string
-                      example: string
-                      enum: [string, number]
-                    description:
-                      type: string
-                      example: This is the date on whhich they wish to book and appointment.
+                        example: https://www.example.com
+                      method:
+                        type: string
+                        example: POST
+                        enum: [GET, POST, PUT]
+                      headers:
+                        type: object
+                        description: optional headers for the webhook
+                        properties:
+                          headerName:
+                            type: string
+                            description: Header name-value pair
+                      body:
+                        type: object
+                        description: DONOT pass in case of "GET" method
+                        properties:
+                          key:
+                            type: string
+                            description: Wrap inside {{}} if dynamic, use normal string otherwise (for hard-coded values). Dynamic values can be extracted during the call using extractedCallInfo object
+                      responseData:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                            - jsonPath
+                            - variableName
+                            - prompt
+                          description: '`data` here is the response data which can be accessed and described within jsonPath'
+                          properties:
+                            jsonPath:
+                              type: string
+                              description: Path of variable in the data object
+                              example: data.date
+                            variableName:
+                              type: string
+                              description: Name of the variable
+                              example: date
+                            prompt:
+                              type: string
+                              example: For which date should we book an appointment with you
+                  extractedCallInfo:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - name
+                        - type
+                        - description
+                      properties:
+                        name:
+                          type: string
+                          example: date
+                        type:
+                        type: string
+                        example: string
+                        enum: [string, number]
+                      description:
+                        type: string
+                        example: This is the date on whhich they wish to book and appointment.
     receptionist400Error:
       type: object
       properties:
