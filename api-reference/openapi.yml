@@ -479,7 +479,7 @@ components:
                         - jsonPath
                         - variableName
                         - prompt
-                      description: '`data` here is the response data which can be accessed and described within jsonPath'
+                      description: "`data` here is the response data which can be accessed and described within jsonPath"
                       properties:
                         jsonPath:
                           type: string
@@ -789,7 +789,7 @@ components:
                         - jsonPath
                         - variableName
                         - prompt
-                      description: '`data` here is the response data which can be accessed and described within jsonPath'
+                      description: "`data` here is the response data which can be accessed and described within jsonPath"
                       properties:
                         jsonPath:
                           type: string
@@ -1111,7 +1111,7 @@ components:
                             - jsonPath
                             - variableName
                             - prompt
-                          description: '`data` here is the response data which can be accessed and described within jsonPath'
+                          description: "`data` here is the response data which can be accessed and described within jsonPath"
                           properties:
                             jsonPath:
                               type: string
@@ -1136,7 +1136,6 @@ components:
                         name:
                           type: string
                           example: date
-                        type:
                         type: string
                         example: string
                         enum: [string, number]
@@ -1304,7 +1303,7 @@ components:
                   - jsonPath
                   - variableName
                   - prompt
-                description: '`data` here is the response data which can be accessed and described within jsonPath'
+                description: "`data` here is the response data which can be accessed and described within jsonPath"
                 properties:
                   jsonPath:
                     type: string
