@@ -1,0 +1,254 @@
+import { Callout } from "nextra/components";
+import { Tabs, Tab } from "nextra/components";
+
+## Overview
+
+Our webhook system allows you to trigger automated calls by sending HTTP requests to our API endpoint. This guide will walk you through the integration process, security requirements, and implementation examples.
+
+<Callout type="info">
+  Before you begin, make sure you have your webhook credentials: - Webhook URL -
+  Secret Key - Webhook ID - Campaign ID
+</Callout>
+
+## Quick Start
+
+Here's a quick example to get you started:
+
+<Tabs>
+  <Tab title="JavaScript">
+    ```javascript
+    const crypto = require('crypto');
+
+    const WEBHOOK_URL = 'https://api.example.com/novi/call';
+    const SECRET_KEY = 'your_secret_key';
+    const WEBHOOK_ID = 'your_webhook_id';
+    const CAMPAIGN_ID = 'your_campaign_id';
+
+    const payload = {
+      campaign_id: CAMPAIGN_ID,
+      webhook_id: WEBHOOK_ID,
+      leadData: {
+        phoneNumber: "+1234567890",
+        variables: {
+          name: "John Doe",
+          product: "Premium Plan"
+        }
+      }
+    };
+
+    const timestamp = Date.now().toString();
+    const signature = crypto
+      .createHmac('sha256', SECRET_KEY)
+      .update(timestamp + JSON.stringify(payload))
+      .digest('hex');
+
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-webhook-signature': signature,
+        'x-webhook-timestamp': timestamp
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+    ```
+
+  </Tab>
+  <Tab title="Python">
+    ```python
+    import hmac
+    import json
+    import time
+    import hashlib
+    import requests
+
+    WEBHOOK_URL = 'https://api.example.com/novi/call'
+    SECRET_KEY = 'your_secret_key'
+    WEBHOOK_ID = 'your_webhook_id'
+    CAMPAIGN_ID = 'your_campaign_id'
+
+    payload = {
+        'campaign_id': CAMPAIGN_ID,
+        'webhook_id': WEBHOOK_ID,
+        'leadData': {
+            'phoneNumber': '+1234567890',
+            'variables': {
+                'name': 'John Doe',
+                'product': 'Premium Plan'
+            }
+        }
+    }
+
+    timestamp = str(int(time.time() * 1000))
+    message = timestamp + json.dumps(payload)
+    signature = hmac.new(
+        SECRET_KEY.encode('utf-8'),
+        message.encode('utf-8'),
+        hashlib.sha256
+    ).hexdigest()
+
+    headers = {
+        'Content-Type': 'application/json',
+        'x-webhook-signature': signature,
+        'x-webhook-timestamp': timestamp
+    }
+
+    response = requests.post(
+        WEBHOOK_URL,
+        headers=headers,
+        json=payload
+    )
+
+    print(response.json())
+    ```
+
+  </Tab>
+  <Tab title="Go">
+    ```go
+    package main
+
+    import (
+      "crypto/hmac"
+      "crypto/sha256"
+      "encoding/hex"
+      "encoding/json"
+      "fmt"
+      "net/http"
+      "time"
+    )
+
+    const (
+      WEBHOOK_URL = "https://api.example.com/novi/call"
+      SECRET_KEY = "your_secret_key"
+      WEBHOOK_ID = "your_webhook_id"
+      CAMPAIGN_ID = "your_campaign_id"
+    )
+
+    func main() {
+      payload := map[string]interface{}{
+        "campaign_id": CAMPAIGN_ID,
+        "webhook_id": WEBHOOK_ID,
+        "leadData": map[string]interface{}{
+          "phoneNumber": "+1234567890",
+          "variables": map[string]interface{}{
+            "name": "John Doe",
+            "product": "Premium Plan",
+          },
+        },
+      }
+
+      timestamp := time.Now().UnixNano() / int64(time.Millisecond)
+      message, _ := json.Marshal(payload)
+      signature := generateSignature(timestamp, message)
+
+      req, _ := http.NewRequest("POST", WEBHOOK_URL, bytes.NewBuffer(message))
+      req.Header.Set("Content-Type", "application/json")
+      req.Header.Set("x-webhook-signature", signature)
+      req.Header.Set("x-webhook-timestamp", fmt.Sprintf("%d", timestamp))
+
+      client := &http.Client{}
+      resp, _ := client.Do(req)
+      defer resp.Body.Close()
+    }
+
+    func generateSignature(timestamp int64, message []byte) string {
+      h := hmac.New(sha256.New, []byte(SECRET_KEY))
+      h.Write([]byte(fmt.Sprintf("%d", timestamp)))
+      h.Write(message)
+      return hex.EncodeToString(h.Sum(nil))
+    }
+    ```
+
+  </Tab>
+</Tabs>
+
+## Authentication
+
+Every webhook request must be authenticated using HMAC-SHA256 signature verification.
+
+### Required Headers
+
+| Header                | Description                       |
+| --------------------- | --------------------------------- |
+| `x-webhook-signature` | HMAC signature of the request     |
+| `x-webhook-timestamp` | Current timestamp in milliseconds |
+| `Content-Type`        | Must be `application/json`        |
+
+### Generating the Signature
+
+1. Create a string by concatenating the timestamp and the JSON-stringified payload
+2. Generate an HMAC-SHA256 hash using your secret key
+3. Convert the hash to hexadecimal
+
+<Callout type="warning">
+  The timestamp must be within 5 minutes of the current time to prevent replay
+  attacks.
+</Callout>
+
+## Request Format
+
+### Endpoint
+
+```
+POST /novi/webhook/call
+```
+
+### Request Body
+
+```json
+{
+  "campaign_id": "string",
+  "webhook_id": "string",
+  "leadData": {
+    "phoneNumber": "string",
+    "variables": {
+      "customField1": "value1",
+      "customField2": "value2"
+    }
+  }
+}
+```
+
+#### Required Fields
+
+| Field                  | Type   | Description                        |
+| ---------------------- | ------ | ---------------------------------- |
+| `campaign_id`          | string | Your campaign identifier           |
+| `webhook_id`           | string | Your webhook identifier            |
+| `leadData.phoneNumber` | string | Phone number in E.164 format       |
+| `leadData.variables`   | object | Custom variables for your campaign |
+
+<Callout type="info">
+  Phone numbers must be in E.164 format (e.g., +1234567890)
+</Callout>
+
+## Response Codes
+
+| Status Code | Description                                   |
+| ----------- | --------------------------------------------- |
+| 200         | Success                                       |
+| 400         | Bad Request - Check your request format       |
+| 401         | Unauthorized - Invalid signature or timestamp |
+| 404         | Campaign not found                            |
+| 500         | Server Error                                  |
+
+## Error Handling
+
+### Example Error Response
+
+```json
+{
+  "error": "Invalid webhook signature"
+}
+```
+
+Common error scenarios:
+
+- Missing required fields
+- Invalid phone number format
+- Invalid signature
+- Expired timestamp
+- Missing mandatory campaign variables

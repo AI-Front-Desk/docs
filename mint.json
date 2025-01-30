@@ -51,18 +51,14 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction"]
+      "pages": [
+        "introduction"
+      ]
     },
     {
       "group": "API Documentation",
-      "pages": ["api-reference/introduction"]
-    },
-    {
-      "group": "Plants",
       "pages": [
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/delete"
+        "api-reference/introduction"
       ]
     },
     {
@@ -74,6 +70,12 @@
         "api-reference/users/calls",
         "api-reference/users/texts",
         "api-reference/users/voicemails"
+      ]
+    },
+    {
+      "group": "Novi",
+      "pages": [
+        "api-reference/webhooks/make_a_call"
       ]
     }
   ],
